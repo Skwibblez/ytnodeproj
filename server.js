@@ -17,21 +17,21 @@ app.use(express.static(path.join(__dirname, 'public')))
 //For reading form body
 app.use(bodyParser.urlencoded({ extended: true }))
 
-var connectionString = 'mongodb+srv://skwibblez:7utakoe@grisaia.jyhgf.mongodb.net/skwibblez?retryWrites=true&w=majority'
+const connectionString = 'mongodb+srv://skwibblez:7utakoe@grisaia.jyhgf.mongodb.net/skwibblez?retryWrites=true&w=majority'
 var __dirname = '/ytproject'
 
-app.get('/', (req, res) => {
-  //res.sendFile(__dirname + '/index.html')
-  //db.collection('songs').find().toArray()
-      res.render('proj.ejs')
+// app.get('/', (req, res) => {
+//   //res.sendFile(__dirname + '/index.html')
+//   //db.collection('songs').find().toArray()
+//       res.render('proj.ejs')
+//
+//
+//     //res.render('proj.ejs', {})
+//   // ...
+// })
 
 
-    //res.render('proj.ejs', {})
-  // ...
-})
-
-
-MongoClient.connect(connectionString, { useUnifiedTopology: true })
+MongoClient.connect(process.env.MONBOGDB_URI ||connectionString, { useUnifiedTopology: true })
   .then(client => {
     console.log('Connected to Database')
     const db = client.db('YouTubeProject')
