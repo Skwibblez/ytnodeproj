@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles.css">
+  <title> YTProject</title>
+</head>
+  <body>
+    <h1> Amane best girl </h1>
+  <!--Comment out video temporarily-->
+  <div class = "flex-container">
+
+    <div>
+      <iframe title="YouTube video player" id ="ytvid" class="youtube-player" type="text/html"
+       src="https://www.youtube.com/embed/M68OwnWhEqY?autoplay=1&loop=1"
+      frameborder="0" allow="autoplay"allowFullScreen></iframe>
+      <input id = "vidDisplay" type = "button" value="Hide" onclick="videoDisplay()"/>
+    </div>
+    <div>
+      <table id="myTableData"  border="1" cellpadding="2">
+          <tr>
+              <td>&nbsp;</td>
+              <td><b>User</b></td>
+              <td><b>Song</b></td>
+              <td><b>Link</b></td>
+              <td><b>Play </b></td>
+              <td><b>Delete Song</b></td>
+          </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Test with image source first -->
+  <div id="picDiv">
+    <img id = "picture" src =https://vistapointe.net/images/hoshizora-e-kakaru-hashi--9.jpg>
+    <input id = "displayButton" type = "button" value="Hide" onclick="buttonDisplay()"/>
+  </div>
+
+  <!-- Create chat/input videos aligned to right -->
+  <div id = assortedButtons>
+    <form action="/action_page.php">
+      <label for="fname">New Video:</label>
+      <input type="text" id="nVid" name="newVideo"><br><br>
+
+      <input id = "clickme" type = "button" value="Test" onclick="logger()"/>
+      <input id = "nayuPic" type = "button" value="Nayuta Pic" onclick="newSrc()"/>
+      <input id = "uiPic" type = "button" value="Ui Pic" onclick="originalSrc()"/>
+      <input id = "nVid" type = "button" value="New Video" onclick="newVid()"/>
+      <input id = "inVid" type = "button" value="Input Video" onclick="videoFromTextbox()"/>
+      <!--<input type="submit" value="Submit"> -->
+    </form>
+  </div>
+
+  <!-- Input form -->
+  <div id = videoForm>
+    <tr>
+        <td>Youtube Link:</td>
+        <td><input type="text" autofocus="autofocus" id="ytlink">
+        <input type="button" id="add" value="Add" onclick="Javascript:addRow()"></td>
+    </tr>
+  </div>
+
+<!--==================================Javascript below----------------------------------------->
+
+  <script type = "text/javascript">
+    //Should move to separate file later
+    function logger(){
+      console.log("Log tester!");
+    }
+
+    function newSrc(){
+      var newImg = "https://i.imgur.com/tz0hDyA.png"
+      document.getElementById("picture").src = newImg;
+      console.log("Switching to Nayuta image!");
+    }
+
+    function originalSrc(){
+      var newImg = "https://vistapointe.net/images/hoshizora-e-kakaru-hashi--9.jpg"
+      document.getElementById("picture").src = newImg;
+      console.log("Switching to Ui image!");
+    }
+
+    function newVid(){
+      console.log("hi")
+      var newV = "https://www.youtube.com/embed/JcnCYQYl0Eo" + "?autoplay=1"
+      document.getElementById("ytvid").src = newV;
+    }
+
+    function videoFromTextbox(){
+      if(document.getElementById("nVid").value == ""){
+        console.log("empty field")
+      }else{
+        console.log("Successfully inputted!");
+        var inputVideo = document.getElementById("nVid").value + "?autoplay=1&loop=1";
+        console.log(inputVideo)
+        document.getElementById("ytvid").src = inputVideo
+        document.getElementById("nVid").value = ""
+      }
+    }
+
+    var rowNum = 1;
+    function addRow() {
+        //Need to check if ytlink has already been added
+        var table = document.getElementById("myTableData");
+
+        var link = (document.getElementById("ytlink")).value;
+        if(link.length > 50){
+          alert("Foh nga");
+          return; //use this in real code -- leave along for testing purposes
+        }
+        var user = 'Update later';
+        var song = "Update later";
+
+        //Buttons
+        var playAll = '<input type="button" value = "Play" onClick="Javacsript:playRow(this)">';  //Change to button
+        var deleteButton = '<input type="button" value = "Delete" onClick="Javacsript:deleteRow(this)">';
+
+        //Buttons need to retrieve data and (update database)
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+
+        let tableHeader2 = [rowNum,user, song, link, playAll, deleteButton]
+
+        var i;
+        for(i = 0; i < tableHeader2.length; i++){
+            row.insertCell(i).innerHTML = tableHeader2[i];
+        }
+        rowNum++;
+        document.getElementById("ytlink").value = "";
+        document.getElementById("ytlink").focus();
+        //Need to implement this button to also delete from database
+    } //end addRow()
+
+    function deleteRow(obj) {
+        var index = obj.parentNode.parentNode.rowIndex;
+        var table = document.getElementById("myTableData");
+        table.deleteRow(index);
+    }
+
+    function buttonDisplay(){
+      var x = document.getElementById("picture");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+          document.getElementById("displayButton").value = "Hide";
+      } else {
+        x.style.display = "none";
+          document.getElementById("displayButton").value = "Show";
+      }
+    }
+
+    function videoDisplay(){
+      var x = document.getElementById("ytvid");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        document.getElementById("vidDisplay").value = "Hide";
+      } else {
+        x.style.display = "none";
+        document.getElementById("vidDisplay").value = "Show";
+      }
+    }
+
+    function playRow(obj){
+      //Get the link from the current row and replace ytvid id with this row's id
+      var index = obj.parentNode.parentNode.rowIndex;
+      var table = document.getElementById("myTableData");
+      var x = document.getElementById("myTableData").rows[index].cells;
+      var newLink = x[3].innerHTML;
+
+      //console.log(newLink);   //Debugging
+
+      //Error checking
+      if(newLink != ""){
+        var inputVideo = newLink + "?autoplay=1";
+        //console.log("Input video: " + inputVideo)
+        //Replace video
+        document.getElementById("ytvid").src = inputVideo
+        console.log("Successfully inputted!");
+      }else{
+        console.log("Link is empty");
+      }
+    }//end playRow
+  </script>
+
+
+  </body>
+</html>

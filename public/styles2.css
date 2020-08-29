@@ -1,0 +1,12 @@
+.flex-container{
+  display: flex;
+}
+
+#quoteTitle{
+
+}
+
+#messageBox{
+  height:100px;
+  font-size:14pt;
+}

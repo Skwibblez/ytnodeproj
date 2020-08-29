@@ -1,0 +1,60 @@
+<!-- index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel = "stylesheet" href = "styles2.css">
+    <title>Testing</title>
+  </head>
+
+  <body>
+
+    <h1>Allahu Akbar</h1>
+    <script src="/main.js"></script>
+    <div>
+      <form action="/quotes" method="POST">
+        <input type="text" placeholder="name" name="name" />
+        <input type="text" placeholder="quote" name="quote" />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class = "flex-container">
+      <h2 id = "quoteTitle"> Quotes </h2>
+      <ul class="songs">
+        <% for(var i = 0; i < songs.length; i++) {%>
+          <li class="song">
+            <span><%= songs[i].name %></span>:
+            <span><%= songs[i].quote %></span>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+
+    <div>
+        <form action="/messages" method = "POST">
+          <input type = "text" id="messageBox" name = "myMessage"/>
+          <button type ="submit"> Submit </button>
+    </div>
+
+    <div>
+      <table id="myTableData"  border="1" cellpadding="2">
+          <tr>
+              <td>&nbsp;</td>
+              <td><b>User</b></td>
+              <td><b>Song</b></td>
+              <td><b>Link</b></td>
+              <td><b>Play </b></td>
+              <td><b>Delete Song</b></td>
+          </tr>
+      </table>
+    </div>
+    <div id = videoForm>
+      <tr>
+          <td>Youtube Link:</td>
+          <td><input type="text" autofocus="autofocus" id="ytlink">
+          <input type="button" id="add" value="Add" onclick="Javascript:addRow()"></td>
+      </tr>
+    </div>
+  </body>
+</html>
