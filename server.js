@@ -4,10 +4,16 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const app = express()
+//New
+const path = require('path')
+
 app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'))
 
 //For accessing static files
-app.use(express.static('public'));
+//app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')))
+
 //For reading form body
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -66,29 +72,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         })
         .catch(error => console.error(error))
     })
-
-
-
-    // app.post('/quotes', (req, res) => {
-    //   songsCollection.insertOne(req.body) //Storing in db
-    //     .then(result => {
-    //       console.log(result) //Printing--Debugging
-    //     })
-    //     .catch(error => console.error(error)) //Error catching
-    // })
-
-
-
-
-  })
-
-
-
-
-
-
-
-
+  })//mongodb client
 
 
 //OR use this to do smth else
